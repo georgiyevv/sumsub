@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "@tronweb3/tronwallet-adapter-binance": "^1.0.3",
+    "@tronweb3/tronwallet-adapter-bitkeep": "^1.1.7",
+    "@tronweb3/tronwallet-adapter-bybit": "^1.0.2",
+    "@tronweb3/tronwallet-adapter-imtoken": "^1.0.3",
+    "@tronweb3/tronwallet-adapter-ledger": "^1.1.12",
+    "@tronweb3/tronwallet-adapter-okxwallet": "^1.0.7",
+    "@tronweb3/tronwallet-adapter-tokenpocket": "^1.0.8",
+    "@tronweb3/tronwallet-adapter-tronlink": "^1.1.13",
+    "@tronweb3/tronwallet-adapter-trust": "^1.0.2",
+    "@tronweb3/tronwallet-adapter-walletconnect": "^3.0.3",
+    "@tronweb3/tronwallet-adapter-metamask-tron": "^1.0.2"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production node obfuscate.js && cross-env NODE_ENV=production webpack --mode production",
+    "start": "cross-env NODE_ENV=development && webpack serve --mode development",
+    "postinstall": "patch-package"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "javascript-obfuscator": "^5.3.0",
+    "patch-package": "^8.0.1",
+    "terser-webpack-plugin": "^5.4.0",
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.2",
+    "webpack-dev-server": "^5.2.3"
+  }
+}

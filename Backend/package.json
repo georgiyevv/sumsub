@@ -1,0 +1,14 @@
+{
+	"name": "cozartweb",
+	"version": "1.0.0",
+	"description": "Packages",
+	"main": "server.js",
+	"author": "CozartWeb",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.6",
+		"express": "^5.2.1",
+		"node-telegram-bot-api": "^0.67.0",
+		"tronweb": "^6.1.1"
+	}
+}

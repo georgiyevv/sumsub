@@ -1,0 +1,1 @@
+{"version":3,"file":"windowPostMessageTransport.d.cts","sourceRoot":"","sources":["../../src/transports/windowPostMessageTransport.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,SAAS,EAAqB,+BAA2B;AASvE;;;;;;;;;;;;GAYG;AACH,wBAAgB,6BAA6B,CAC3C,MAAM,GAAE;IAAE,cAAc,CAAC,EAAE,MAAM,CAAC;IAAC,aAAa,CAAC,EAAE,MAAM,CAAA;CAAO,GAC/D,SAAS,CAyHX"}

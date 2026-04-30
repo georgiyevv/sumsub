@@ -1,0 +1,1 @@
+{"version":3,"file":"externallyConnectableTransport.d.mts","sourceRoot":"","sources":["../../src/transports/externallyConnectableTransport.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,SAAS,EAAqB,+BAA2B;AAGvE;;;;;;;;;;;;;;;;;GAiBG;AACH,wBAAgB,iCAAiC,CAC/C,MAAM,GAAE;IAAE,WAAW,CAAC,EAAE,MAAM,CAAC;IAAC,cAAc,CAAC,EAAE,MAAM,CAAC;IAAC,aAAa,CAAC,EAAE,MAAM,CAAA;CAAO,GACrF,SAAS,CAsIX"}

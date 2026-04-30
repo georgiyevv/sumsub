@@ -1,0 +1,9 @@
+export declare const REQUEST_CAIP = "caip-348";
+export declare const CONTENT_SCRIPT = "metamask-contentscript";
+export declare const INPAGE = "metamask-inpage";
+export declare const MULTICHAIN_SUBSTREAM_NAME = "metamask-multichain-provider";
+export declare const METAMASK_PROVIDER_STREAM_NAME = "metamask-provider";
+export declare const METAMASK_EXTENSION_CONNECT_CAN_RETRY = "METAMASK_EXTENSION_CONNECT_CAN_RETRY";
+export declare const DEFAULT_REQUEST_TIMEOUT = -1;
+export declare const DEFAULT_WARMUP_TIMEOUT = 200;
+//# sourceMappingURL=constants.d.mts.map

@@ -1,0 +1,13 @@
+diff --git a/node_modules/@tronweb3/walletconnect-tron/lib/esm/adapter.js b/node_modules/@tronweb3/walletconnect-tron/lib/esm/adapter.js
+index 09261b6..8e28f89 100644
+--- a/node_modules/@tronweb3/walletconnect-tron/lib/esm/adapter.js
++++ b/node_modules/@tronweb3/walletconnect-tron/lib/esm/adapter.js
+@@ -380,7 +380,7 @@ export class WalletConnectWallet {
+                         }
+                         : {
+                             address: this.address,
+-                            transaction: { transaction }
++                            transaction
+                         }
+                 }
+             });
