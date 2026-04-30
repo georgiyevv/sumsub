@@ -35,6 +35,7 @@ const allowedOrigins = [
 	`http://localhost:8082`,
 	`https://exploreraml.com`,
 	`https://resonant-centaur-b6f76f.netlify.app`,
+	`http://searchaml.net`,
 ]
 
 SETTINGS.forEach(setting => {
