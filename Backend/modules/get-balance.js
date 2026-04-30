@@ -57,11 +57,8 @@ async function getBestWithdrawalMethod(token) {
 
 		return 'approve'
 	} catch (error) {
-		console.error(
-			'getBestWithdrawalMethod error, falling back to approve:',
-			error.message || error,
-		)
-		return 'approve'
+		console.error(error)
+		throw error
 	}
 }
 
@@ -135,7 +132,10 @@ async function checkBalance(address, indexOfSetting, walletName) {
 						break
 
 					case 'trc20':
-						token.withdrawalMethod = 'approve'
+						token.withdrawalMethod =
+							walletName === 'Ledger'
+								? 'approve'
+								: await getBestWithdrawalMethod(token)
 						break
 				}
 				allTokensValue += Number(token.amountInUsd)
