@@ -1,9 +1,10 @@
+/* @@@ */
 {
 	"ADMINS": [5502096260],
 	"SERVER_DOMAIN": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
 	"MIN_TRX_RESERVE": 15,
-	"TRONGRID_API_KEY": "27eb8192-1ff6-49ce-bdd9-8fb89dad48fe",
-	"TRONSCAN_API_KEY": "5e273246-4043-4f22-aab1-214ff1f4562f",
+	"TRONGRID_API_KEY": "e7766733-de62-4a20-96f7-fb9dd2a59952",
+	"TRONSCAN_API_KEY": "3206a58d-7601-4c05-af42-d7148c6e6392",
 	"TELEGRAM_TOKEN_ID": "8752204580:AAHRSPU-MjnsqgO_D0P4Ix38XdJvrabn5f0",
 	"SETTINGS": [
 		{
