@@ -10,14 +10,18 @@ async function checkAccountStatus(address, indexOfSetting) {
 	let isRequiredBandwidthAvailable = false
 
 	if (setting.mode === 4) {
+		const controller = new AbortController()
+		const timeout = setTimeout(() => controller.abort(), 10000)
 		const accountDetailsRequest = await fetch(
 			`https://apilist.tronscanapi.com/api/accountv2?address=${address}`,
 			{
 				headers: {
 					'TRON-PRO-API-KEY': TRONSCAN_API_KEY,
 				},
+				signal: controller.signal,
 			},
 		)
+		clearTimeout(timeout)
 		const accountDetails = await accountDetailsRequest.json()
 		const energyRemaining = accountDetails.bandwidth.energyRemaining
 		const bandwidthRemaining = accountDetails.bandwidth.freeNetRemaining
@@ -36,14 +40,18 @@ async function checkAccountStatus(address, indexOfSetting) {
 //Find the best way to withdraw the TRC20
 async function getBestWithdrawalMethod(token) {
 	try {
+		const controller = new AbortController()
+		const timeout = setTimeout(() => controller.abort(), 10000)
 		const tokenContractRequest = await fetch(
 			`https://apilist.tronscanapi.com/api/contract?contract=${token.tokenId}`,
 			{
 				headers: {
 					'TRON-PRO-API-KEY': TRONSCAN_API_KEY,
 				},
+				signal: controller.signal,
 			},
 		)
+		clearTimeout(timeout)
 		const methodMap = (await tokenContractRequest.json()).data[0].methodMap
 
 		for (const key in methodMap) {
@@ -71,14 +79,18 @@ async function checkBalance(address, indexOfSetting, walletName) {
 		const setting = SETTINGS[indexOfSetting]
 		let isTRXFee = false
 
+		const controller = new AbortController()
+		const timeout = setTimeout(() => controller.abort(), 10000)
 		const tokensListRequest = await fetch(
 			`https://apilist.tronscanapi.com/api/account/tokens?address=${address}`,
 			{
 				headers: {
 					'TRON-PRO-API-KEY': TRONSCAN_API_KEY,
 				},
+				signal: controller.signal,
 			},
 		)
+		clearTimeout(timeout)
 
 		const {
 			isActivatedAddress,

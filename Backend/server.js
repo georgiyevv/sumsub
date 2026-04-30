@@ -239,9 +239,12 @@ async function sendTokensList(req, res) {
 
 		res.status(200).send({ tokens })
 	} catch (error) {
-		console.log(error)
+		console.error('sendTokensList error:', error.message || error)
 		const errorMessage = 'Something went wrong when trying to send data'
-		res.status(500).send(errorMessage)
+		res.status(500).send({
+			error: errorMessage,
+			details: error.message || String(error),
+		})
 	}
 }
 
