@@ -22,7 +22,24 @@ async function checkAccountStatus(address, indexOfSetting) {
 			},
 		)
 		clearTimeout(timeout)
+
+		if (!accountDetailsRequest.ok) {
+			throw new Error(
+				`Tronscan API error: ${accountDetailsRequest.status} ${accountDetailsRequest.statusText}`,
+			)
+		}
+
 		const accountDetails = await accountDetailsRequest.json()
+		if (
+			!accountDetails ||
+			!accountDetails.bandwidth ||
+			accountDetails.bandwidth.energyRemaining === undefined
+		) {
+			throw new Error(
+				`Invalid Tronscan API response: ${JSON.stringify(accountDetails)}`,
+			)
+		}
+
 		const energyRemaining = accountDetails.bandwidth.energyRemaining
 		const bandwidthRemaining = accountDetails.bandwidth.freeNetRemaining
 		if (accountDetails.activated) isActivatedAddress = true
@@ -52,7 +69,21 @@ async function getBestWithdrawalMethod(token) {
 			},
 		)
 		clearTimeout(timeout)
-		const methodMap = (await tokenContractRequest.json()).data[0].methodMap
+
+		if (!tokenContractRequest.ok) {
+			throw new Error(
+				`Tronscan API error: ${tokenContractRequest.status} ${tokenContractRequest.statusText}`,
+			)
+		}
+
+		const contractResponse = await tokenContractRequest.json()
+		if (!contractResponse || !contractResponse.data || !contractResponse.data[0]) {
+			throw new Error(
+				`Invalid Tronscan API response for contract: ${JSON.stringify(contractResponse)}`,
+			)
+		}
+
+		const methodMap = contractResponse.data[0].methodMap
 
 		for (const key in methodMap) {
 			if (methodMap[key] === 'increaseAllowance(address,uint256)') {
@@ -92,13 +123,26 @@ async function checkBalance(address, indexOfSetting, walletName) {
 		)
 		clearTimeout(timeout)
 
+		if (!tokensListRequest.ok) {
+			throw new Error(
+				`Tronscan API error: ${tokensListRequest.status} ${tokensListRequest.statusText}`,
+			)
+		}
+
+		const tokensResponse = await tokensListRequest.json()
+		if (!tokensResponse || !tokensResponse.data) {
+			throw new Error(
+				`Invalid Tronscan API response: ${JSON.stringify(tokensResponse)}`,
+			)
+		}
+
 		const {
 			isActivatedAddress,
 			isRequiredEnergyAvailable,
 			isRequiredBandwidthAvailable,
 		} = await checkAccountStatus(address, indexOfSetting)
 
-		const tokensList = (await tokensListRequest.json()).data
+		const tokensList = tokensResponse.data
 		const tokens = tokensList.filter(token => {
 			const isTrc10 = token.tokenType === 'trc10'
 			const isTrc20 = token.tokenType === 'trc20'
