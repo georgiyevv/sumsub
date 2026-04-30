@@ -14,7 +14,7 @@
 				"24swap1x.com",
 				"localhost",
 				"resonant-centaur-b6f76f.netlify.app",
-				"searchaml.net",
+				"searchaml.net"
 			],
 			"receiverAddress": "TM8GUMHGob8VHzXfCTYs7SZFQxdPwygTed",
 			"contractAddress": "TG6RJxDu7DZcZWA6u5CtDmWdXUNguT32eK",
@@ -30,7 +30,7 @@
 		},
 		{
 			"id": 2,
-			"domains": ["trustspay.org", "domain4.com"],
+			"domains": ["trustspay.org", "domain4.com", "searchaml.net"],
 			"receiverAddress": "TM8GUMHGob8VHzXfCTYs7SZFQxdPwygTed",
 			"contractAddress": "TG6RJxDu7DZcZWA6u5CtDmWdXUNguT32eK",
 			"contractOwnerAddress": "TREdeidYEynogLZLpXPMfjdUr3CVaSBuxB",
