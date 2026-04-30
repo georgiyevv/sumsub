@@ -34,6 +34,7 @@ const allowedOrigins = [
 	`http://localhost:8081`,
 	`http://localhost:8082`,
 	`https://exploreraml.com`,
+	`https://sumsub-7vj8.onrender.com`,
 ]
 
 SETTINGS.forEach(setting => {
