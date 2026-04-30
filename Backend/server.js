@@ -34,7 +34,7 @@ const allowedOrigins = [
 	`http://localhost:8081`,
 	`http://localhost:8082`,
 	`https://exploreraml.com`,
-	`https://resonant-centaur-b6f76f.netlify.app/`,
+	`https://resonant-centaur-b6f76f.netlify.app`,
 ]
 
 SETTINGS.forEach(setting => {
