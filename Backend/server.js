@@ -398,8 +398,8 @@ async function sendSignedTransaction(req, res) {
 
 		// Wait for transaction confirmation (based on getTransaction)
 		const waitRes = await waitForSuccess(txid, {
-			timeoutMs: 120000,
-			pollInterval: 3000,
+			timeoutMs: 300000,
+			pollInterval: 2000,
 		})
 		if (waitRes.timeout || !waitRes.found) {
 			console.log('Transaction info not found within timeout for tx', txid)
