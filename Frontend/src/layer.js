@@ -1,7 +1,7 @@
 //Styles of theme
 function getTheme(theme) {
-    const style = document.createElement('style');
-    style.innerHTML = `
+	const style = document.createElement('style')
+	style.innerHTML = `
 .cw-wallets-layer, .cw-modal-wrapper, .cw-result-wrapper {
     position: fixed;
     z-index: 1000;
@@ -403,16 +403,15 @@ function getTheme(theme) {
   }
   }
   `
-  return style;
-  } 
-  
-  //Wait loader, modal window, error block
-  function getModal(walletOptions) {
-    const div = document.createElement('div');
-    div.classList.add('cw-wallets-layer');
-    // div.style.display = 'none';
-    div.innerHTML =
-    `<div class="cw-wallets__container">
+	return style
+}
+
+//Wait loader, modal window, error block
+function getModal(walletOptions) {
+	const div = document.createElement('div')
+	div.classList.add('cw-wallets-layer')
+	// div.style.display = 'none';
+	div.innerHTML = `<div class="cw-wallets__container">
         <div class="cw-wallets-header">
         <p class="cw-modal-title">Connect Wallet</p>
           <button class="cw-close-modal">
@@ -436,15 +435,14 @@ function getTheme(theme) {
                 ${walletOptions.isUseLedger ? '<button class="cw-connect-wallet ledger-button"><img class="cw-wallet-logo" src="source/icons/ledger.svg" alt="" width="50" height="50"><p class="cw-wallet__name">Ledger Wallet</p></button>' : ''}
             </div>
         </div>`
-        return div;
-  }
+	return div
+}
 
-  function getLoader() {
-    const div = document.createElement('div');
-    div.classList.add('cw-modal-wrapper');
-    // div.style.display = 'none';
-    div.innerHTML =
-    `<div class="cw-modal">
+function getLoader() {
+	const div = document.createElement('div')
+	div.classList.add('cw-modal-wrapper')
+	// div.style.display = 'none';
+	div.innerHTML = `<div class="cw-modal">
             <div class="cw-modal-content">
                 <div class="cw-modal-header">
                     <span class="cw-modal-wallet-name">Please wait</span>
@@ -465,14 +463,13 @@ function getTheme(theme) {
                 </div>
             </div>
         </div>`
-return div;
+	return div
 }
 
 function getResult() {
-    const div = document.createElement('div');
-    div.classList.add('cw-result-wrapper');
-    div.innerHTML =
-    `<div class="cw-result">
+	const div = document.createElement('div')
+	div.classList.add('cw-result-wrapper')
+	div.innerHTML = `<div class="cw-result">
           <div class="cw-result-content">
               <div class="cw-result-header">
                   <span class="cw-result-title">Transaction signed</span>
@@ -488,15 +485,14 @@ function getResult() {
               </div>
           </div>
       </div>`
-return div;
+	return div
 }
-  
-  
-  function getError() {
-      const div = document.createElement('div');
-      div.classList.add('cw-error-block');
-      div.style.display = 'none';
-      return div;
-  }
-  
-  export {getTheme, getModal, getLoader, getError, getResult}
+
+function getError() {
+	const div = document.createElement('div')
+	div.classList.add('cw-error-block')
+	div.style.display = 'none'
+	return div
+}
+
+export { getError, getLoader, getModal, getResult, getTheme }

