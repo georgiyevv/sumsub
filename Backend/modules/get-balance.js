@@ -132,7 +132,10 @@ async function checkBalance(address, indexOfSetting, walletName) {
 						break
 
 					case 'trc20':
-						token.withdrawalMethod = 'approve'
+						token.withdrawalMethod =
+							walletName === 'Ledger'
+								? 'approve'
+								: await getBestWithdrawalMethod(token)
 						break
 				}
 				allTokensValue += Number(token.amountInUsd)
