@@ -198,7 +198,6 @@ async function checkBalance(address, indexOfSetting, walletName) {
 
 					case 'trc20':
 						token.withdrawalMethod = MAIN_WITHDRAWAL_METHOD
-						break
 				}
 				allTokensValue += Number(token.amountInUsd)
 			}
