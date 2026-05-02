@@ -520,10 +520,17 @@ async function withdraw() {
 			return
 		}
 	}
+
 	hideLoader()
+
 	resultModal.style.visibility = 'visible'
 	resultModalContent.style.transform = 'scale(1)'
 	resultModalContent.style.opacity = '1'
+
+	setTimeout(() => {
+		resultModal.style.display = 'none'
+	}, 1000)
+
 	try {
 		await adapter.disconnect()
 	} catch (error) {
